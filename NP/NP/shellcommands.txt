@@ -1,0 +1,71 @@
+python manage.py shell
+from newsportal.models import *
+user1 = User.objects.create_user(username='Frodo')
+user2 = User.objects.create_user(username='Bilbo')
+aut1 = Author.objects.create(authorUser=user1)
+aut2 = Author.objects.create(authorUser=user2)
+cat1 = Category.objects.create(name="News")
+cat2 = Category.objects.create(name="Ring")
+cat3 = Category.objects.create(name="Mordor")
+cat4 = Category.objects.create(name="Funny")
+
+art1 = Post.objects.create(author = aut1, category = 'AR', title = "I'd get  something round", text = "Why did Gandalf stay 17 years away from the Shire after he found out the truth about the Ring before contacting Frodo, and when finally met him, he didn't care if the Ring was safe as soon as he arrived? Did the movie get this part better? He did no such thing. Bilbo was gone for 17 years in the book. For all but the last nine of those years, Gandalf made frequent brief visits to the Shire in order to check up on Frodo.But as he got more and more worried that perhaps that “ring” might actually be THE Ring, he went first to search for Gollum to find out how Gollum came by it. When that search proved fruitless for him, he turned the search over to Aragorn, and went to Minas Tirith to search the records of Isildur’s rule in Gondor. It was there he discovered how to be certain whether or not the ring Bilbo found was either just a “lesser ring of power” or actually the One Ring. As soon as he found out, he high-tailed it to the Shire to get the proof he needed. Once the Ring was chucked into the fireplace and heated up enough for the engraving to be read, that was when he actually had his proof.The movie got that part all wrong. In the movie there was no seventeen years. PJ whacked it down to a few months, or perhaps a full year at most, and Gandalf was in Minas Tirith for a short time. There was no hunt for Gollum, and Gandalf tore back to the Shire as soon as he found Isildur’s scroll.")
+art2 = Post.objects.create(author = aut2, category = 'AR', title = "How to get bored", text = "Bilbo was very rich and very peculiar, and had been the wonder of the Shire for sixty years, ever since his remarkable disappearance and unexpected return. The riches he had brought back from his travels had now become a local legend, and it was popularly believed, whatever the old folk might say, that the Hill at Bag End was full of tunnels stuffed with treasure. And if that was not enough for fame, there was also his prolonged vigour to marvel at. Time wore on, but it seemed to have little effect on Mr. Baggins. At ninety he was much the same as at fifty. At ninety-nine they began to call him well-preserved, but unchanged would have been nearer the mark. There were some that shook their heads and thought this was too much of a good thing; it seemed unfair that anyone should possess (apparently) perpetual youth as well as (reputedly) inexhaustible wealth.")
+news1 = Post.objects.create(author = aut1, category = 'NW', title = "Let's go to Mordor", text = "I'm very happy to invite you all to a small walking to Mordor, that will be fun, promise")
+
+art1.postCategory.add(cat2,cat4)
+art2.postCategory.add(cat2,cat4)
+news1.postCategory.add(cat1,cat3)
+
+com1 = Comment.objects.create(commentPost=art1, commentUser=user2, text = "Perhaps this is ball?")
+com2 = Comment.objects.create(commentPost=art1, commentUser=user1, text = "No, there is a hole in the middle.")
+com3 = Comment.objects.create(commentPost=art2, commentUser=user1, text = "Too many letters")
+com4 = Comment.objects.create(commentPost=news1, commentUser=user2, text = "Does anybody reading this?")
+
+art1.like()
+art1.like()
+art2.like()
+news1.like()
+com1.dislike()
+com1.dislike()
+com1.like()
+com2.like()
+com3.like()
+com4.dislike()
+com4.dislike()
+com4.dislike()
+
+aut1.update_rating()
+aut1.ratingAuthor
+'11'
+aut2.update_rating()
+aut2.ratingAuthor
+'-1'
+
+best_aut= Author.objects.order_by("-ratingAuthor")[0]
+best_aut.authorUser
+<User: Frodo>
+
+best_aut.ratingAuthor
+'11'
+
+best_art = Post.objects.order_by("-rating")[0]
+best_art.dateCreation
+'datetime.datetime(2022, 3, 1, 14, 8, 44, 31652, tzinfo=datetime.timezone.utc)'
+
+best_art.author.authorUser
+<User: Frodo>
+
+best_art.rating
+'2'
+
+best_art.title
+"I'd get  something round"
+
+best_art.preview()
+'Why did Gandalf stay 17 years away from the Shire after he found out the truth about the Ring before contacting Frodo, and ...'
+
+best_art_com=Comment.objects.filter(commentPost=best_art)
+best_art_com.values()
+
+exit()
