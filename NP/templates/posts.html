@@ -1,0 +1,52 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+{% block title %}
+Posts
+{% endblock title %}
+
+{% block content %}
+
+    {% if posts %}
+
+        <table width="80%">
+            <tr>
+                <td>
+                <h1>Всего публикаций</h1>
+                </td>
+                <td>
+                <h1>{{ posts|length }}</h1>
+                </td>
+            </tr>
+            {% for post in posts %}
+            <tr>
+                <td>
+                <p>Заголовок</p>
+                </td>
+                <td>
+                <p>{{post.title|censor}}</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                <p>Дата публикации</p>
+                </td>
+                <td>
+                <p>{{ post.dateCreation|date:"d M Y" }}</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                <p>Тест</p>
+                </td>
+                <td>
+                <p>{{ post.text|truncatewords:20|censor}}</p>
+                </td>
+            </tr>
+             {% endfor %}
+        </table>
+
+
+    {% else %}
+    <h2>Нет публикаций</h2>
+    {% endif %}
+{% endblock content %}
