@@ -8,6 +8,9 @@ register = template.Library()
 @register.filter(name="censor")
 @stringfilter
 def censor(value):
+    if not isinstance(value, str):
+        raise ValueError('Нельзя цензурировать не строку!')
+
     value_split = value.split(" ")
     value_cens = ""
     for i in value_split:
