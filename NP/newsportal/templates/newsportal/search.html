@@ -1,12 +1,16 @@
 {% extends 'flatpages/default.html' %}
 {% load custom_filters %}
 {% block title %}
-Posts
+Search
 {% endblock title %}
 
 {% block content %}
+<form action="" method="get">
+    {{ filterset.form.as_p }}
+    <input type="submit" value="Search" />
+</form>
 
-    {% if posts %}
+{% if posts %}
 
         <table width="80%">
             <tr>
@@ -44,7 +48,6 @@ Posts
             </tr>
              {% endfor %}
         </table>
-
 
     {% else %}
     <h2>Нет публикаций</h2>

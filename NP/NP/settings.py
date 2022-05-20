@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'newsportal',
     'django.contrib.sites',
     'django.contrib.flatpages',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -60,7 +61,7 @@ ROOT_URLCONF = 'NP.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'newsportal/templates/newsportal/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
