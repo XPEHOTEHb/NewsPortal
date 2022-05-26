@@ -1,0 +1,21 @@
+{% extends 'flatpages/default.html' %}
+
+
+{% block title %}
+Edit user
+{% endblock title %}
+
+
+{% block content %}
+
+<h1>Edit user</h1>
+<br>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if is_not_author %}
+    <button> <a href="upgrade/"> Whant to be Author!</a> </button>
+    {% endif %}
+    <input type="submit" value="Save" />
+</form>
+{% endblock content %}

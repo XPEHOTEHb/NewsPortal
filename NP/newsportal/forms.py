@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post
+from .models import Post, User
 from django.core.validators import ValidationError
 
 
@@ -13,6 +13,16 @@ class PostForm(forms.ModelForm):
             'title',
             'postCategory',
             'text',
+        ]
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            'username',
+            'first_name',
+            'last_name',
+            'email',
         ]
 
 """    def clean(self):
