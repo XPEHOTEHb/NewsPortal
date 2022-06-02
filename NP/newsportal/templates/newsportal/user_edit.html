@@ -14,8 +14,14 @@ Edit user
     {% csrf_token %}
     {{ form.as_p }}
     {% if is_not_author %}
-    <button> <a href="upgrade/"> Whant to be Author!</a> </button>
+    <button> <a href="upgrade/"> Want to be an Author!</a> </button>
     {% endif %}
     <input type="submit" value="Save" />
+<!--    <label for="subscribeNews">Subscribe to newsletter</label>
+    {% if subscribe_status %}
+    <input type="checkbox" id="subscribeNews" name="subscribe" value="newsletter" checked>
+    {% else %}
+    <input type="checkbox" id="subscribeNews" name="subscribe" value="newsletter">
+    {% endif %} --!>
 </form>
 {% endblock content %}

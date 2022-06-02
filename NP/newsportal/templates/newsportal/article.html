@@ -10,6 +10,16 @@ Posts
 <table width="80%">
             <tr>
                 <td>
+                <p>Категория</p>
+                </td>
+                <td align="left">
+                    {% for category in post.postCategory.all %}
+                        {{ category }}<br>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>
                 <p>Автор</p>
                 </td>
                 <td align="left">

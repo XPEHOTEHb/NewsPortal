@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractBaseUser
 from django.db import models
 from django.db.models import Sum
 from django.urls import reverse
@@ -42,7 +42,7 @@ class Category(models.Model):
     name = models.CharField(max_length=64, unique=True)
 
     def __str__(self):
-        return self.name
+        return f'{self.name}'
 
     class Meta:
         verbose_name = "Категория"
@@ -85,10 +85,10 @@ class Post(models.Model):
         verbose_name = "Пост"
         verbose_name_plural = "Посты"
 
+    def display_postCategory(self):
+        return ', '.join([postCategory.name for postCategory in self.postCategory.all()[:3]])
 
-class PostCategory(models.Model):
-    postThrough = models.ForeignKey(Post, on_delete=models.CASCADE)
-    categoryThrough = models.ForeignKey(Category, on_delete=models.CASCADE)
+    display_postCategory.short_description = 'postCategory'
 
 
 class Comment(models.Model):
@@ -115,3 +115,14 @@ class Comment(models.Model):
     class Meta:
         verbose_name = "Комментарий"
         verbose_name_plural = "Комментарии"
+
+
+class Subscribe(models.Model):
+    subUser = models.OneToOneField(User, on_delete=models.CASCADE)
+    category = models.ManyToManyField(Category)
+    is_subscribe = models.BooleanField(blank=False)
+
+
+class PostCategory(models.Model):
+    postThrough = models.ForeignKey(Post, on_delete=models.CASCADE)
+    categoryThrough = models.ForeignKey(Category, on_delete=models.CASCADE)
