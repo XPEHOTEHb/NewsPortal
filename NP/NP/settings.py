@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
+"""
+from dotenv import load_dotenv
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+"""
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'newsportal',
+    'appointments',
     'django.contrib.sites',
     'django.contrib.flatpages',
     'django_filters',
@@ -59,7 +65,6 @@ MIDDLEWARE = [
 ]
 
 LOGIN_URL = '/accounts/login/'
-
 SITE_ID = 1
 
 AUTHENTICATION_BACKENDS = [
@@ -74,7 +79,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_FORMS = {'signup': 'newsportal.models.BasicSignupForm'}
 
 ROOT_URLCONF = 'NP.urls'
@@ -154,8 +159,11 @@ STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
 
-EMAIL_HOST = 'smtp.yandex.ru'  # адрес сервера Яндекс-почты для всех один и тот же
-EMAIL_PORT = 465  # порт smtp сервера тоже одинаковый
-EMAIL_HOST_USER = ''  # ваше имя пользователя, например, если ваша почта user@yandex.ru, то сюда надо писать user, иными словами, это всё то что идёт до собаки
-EMAIL_HOST_PASSWORD = ''  # пароль от почты
+
+DEFAULT_FROM_EMAIL = 'rostov@tandoors.ru'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'rostov@tandoors.ru'
+EMAIL_HOST_PASSWORD = 'color5016152'
 EMAIL_USE_SSL = True
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True

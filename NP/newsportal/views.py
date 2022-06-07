@@ -7,6 +7,7 @@ from .forms import PostForm, UserForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 
 
 @login_required
@@ -54,9 +55,10 @@ class NewsList(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['subscribe_status'] = Subscribe.objects.get(subUser=self.request.user).is_subscribe
-        print(
-            f'{Subscribe.objects.get(subUser=self.request.user).subUser}, {Subscribe.objects.get(subUser=self.request.user).is_subscribe}')
+        try:
+            context['subscribe_status'] = Subscribe.objects.get(subUser=self.request.user).is_subscribe
+        except ObjectDoesNotExist:
+            context['subscribe_status'] = False
         return context
 
 
@@ -67,12 +69,10 @@ class PostDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['subscribe_status'] = Subscribe.objects.get(subUser=self.request.user).is_subscribe
-        print(f'{Subscribe.objects.get(subUser=self.request.user).subUser}, '
-              f'{Subscribe.objects.get(subUser=self.request.user).category}, '
-              f'{Subscribe.objects.get(subUser=self.request.user).is_subscribe}, '
-              f'{Category.objects.get(pk=1).name}'
-              )
+        try:
+            context['subscribe_status'] = Subscribe.objects.get(subUser=self.request.user).is_subscribe
+        except ObjectDoesNotExist:
+            context['subscribe_status'] = False
         return context
 
 
